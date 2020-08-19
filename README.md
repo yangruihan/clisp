@@ -11,7 +11,7 @@ git clone https://github.com/yangruihan/clisp.git
 cd clisp
 
 # update submodule
-git submoudle init
+git submodule init
 git submodule update
 
 # build
