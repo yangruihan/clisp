@@ -1,6 +1,6 @@
 # CLisp
 
-Lisp make with pure c
+Lisp written in pure C (C99)
 
 ## Run
 
