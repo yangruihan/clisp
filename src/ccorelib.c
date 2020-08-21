@@ -930,7 +930,7 @@ DEF_FUNC(seqFunc)
 
 DEF_FUNC(conjFunc)
 {
-    ASSERT(value_isPair(FIRST_VAL), "RuntimeError: first argument must be pair");
+    ASSERT(value_isListLike(FIRST_VAL), "RuntimeError: conj first argument must be pair");
 
     if (value_isList(FIRST_VAL))
     {
