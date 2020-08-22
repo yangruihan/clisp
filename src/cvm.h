@@ -1,6 +1,8 @@
 #ifndef __C_VM_H_
 #define __C_VM_H_
 
+#include <string.h>
+
 #include "ccommon.h"
 #include "cobj.h"
 
@@ -29,6 +31,12 @@ void        vm_free(VM* vm);
 const char* vm_rep(VM* vm, const char* input);
 Value       vm_eval(VM* vm, Value value, EnvObj* env, ExceptionObj** exception);
 void        vm_dofile(VM* vm, const char* filePath, int argc, char** argv);
+
+#define     VM_REGISTER_FUNC(vm, funcName, funcPtr) \
+    vm_registerFunc((vm), (funcName), (strlen((funcName))), (funcPtr))
+void        vm_registerFunc(VM* vm, const char* funcName, const int nameLen, FuncPtr funcPtr);
+
+/* ---- gc ----- */
 
 void        vm_pushBlockCmObj(VM* vm, Obj* obj);
 void        vm_popBlockCmObj(VM* vm);

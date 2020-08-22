@@ -24,15 +24,6 @@
 #define ASSERT_ONE_PARAM(funcName) \
     ASSERT(len == 1, "RuntimeError: %s only needs one argument", (funcName))
 
-#define ENV_SET_FUNC(chars, len, func) \
-    do \
-    { \
-        Value sv = value_symbol(vm, (chars), (len)); \
-        VM_PUSHV(sv); \
-        envobj_set(vm->env, sv, value_func(vm, &(func))); \
-        VM_POPV(sv); \
-    } while (false)
-
 #define FIRST_VAL params[0]
 #define SECOND_VAL params[1]
 
@@ -930,7 +921,7 @@ DEF_FUNC(seqFunc)
 
 DEF_FUNC(conjFunc)
 {
-    ASSERT(value_isListLike(FIRST_VAL), "RuntimeError: conj first argument must be pair");
+    ASSERT(value_isListLike(FIRST_VAL), "RuntimeError: conj first argument must be listlike");
 
     if (value_isList(FIRST_VAL))
     {
@@ -979,80 +970,80 @@ void initCoreLib(VM* vm)
     if (vm == NULL)
         return;
 
-    ENV_SET_FUNC("+", 1, plusFunc);
-    ENV_SET_FUNC("-", 1, subFunc);
-    ENV_SET_FUNC("*", 1, mulFunc);
-    ENV_SET_FUNC("/", 1, divFunc);
-    ENV_SET_FUNC("<", 1, lessFunc);
-    ENV_SET_FUNC("<=", 2, lessEqFunc);
-    ENV_SET_FUNC(">", 1, greatFunc);
-    ENV_SET_FUNC(">=", 2, greatEqFunc);
+    vm_registerFunc(vm, "+", 1, plusFunc);
+    vm_registerFunc(vm, "-", 1, subFunc);
+    vm_registerFunc(vm, "*", 1, mulFunc);
+    vm_registerFunc(vm, "/", 1, divFunc);
+    vm_registerFunc(vm, "<", 1, lessFunc);
+    vm_registerFunc(vm, "<=", 2, lessEqFunc);
+    vm_registerFunc(vm, ">", 1, greatFunc);
+    vm_registerFunc(vm, ">=", 2, greatEqFunc);
 
-    ENV_SET_FUNC("=", 1, equalFunc);
+    vm_registerFunc(vm, "=", 1, equalFunc);
 
-    ENV_SET_FUNC("pr-str", 6, prStrFunc);
-    ENV_SET_FUNC("str", 3, strFunc);
-    ENV_SET_FUNC("prn", 3, prnFunc);
-    ENV_SET_FUNC("println", 7, printlnFunc);
+    vm_registerFunc(vm, "pr-str", 6, prStrFunc);
+    vm_registerFunc(vm, "str", 3, strFunc);
+    vm_registerFunc(vm, "prn", 3, prnFunc);
+    vm_registerFunc(vm, "println", 7, printlnFunc);
 
-    ENV_SET_FUNC("list", 4, listFunc);
-    ENV_SET_FUNC("list?", 5, listCheckFunc);
+    vm_registerFunc(vm, "list", 4, listFunc);
+    vm_registerFunc(vm, "list?", 5, listCheckFunc);
 
-    ENV_SET_FUNC("empty?", 6, emptyCheckFunc);
-    ENV_SET_FUNC("count", 5, countCheckFunc);
+    vm_registerFunc(vm, "empty?", 6, emptyCheckFunc);
+    vm_registerFunc(vm, "count", 5, countCheckFunc);
 
-    ENV_SET_FUNC("read-string", 11, readStringFunc);
-    ENV_SET_FUNC("slurp", 5, slurpFunc);
-    ENV_SET_FUNC("eval", 4, evalFunc);
+    vm_registerFunc(vm, "read-string", 11, readStringFunc);
+    vm_registerFunc(vm, "slurp", 5, slurpFunc);
+    vm_registerFunc(vm, "eval", 4, evalFunc);
 
-    ENV_SET_FUNC("atom", 4, atomFunc);
-    ENV_SET_FUNC("atom?", 5, atomCheckFunc);
-    ENV_SET_FUNC("deref", 5, derefFunc);
-    ENV_SET_FUNC("reset!", 6, resetFunc);
-    ENV_SET_FUNC("swap!", 5, swapFunc);
+    vm_registerFunc(vm, "atom", 4, atomFunc);
+    vm_registerFunc(vm, "atom?", 5, atomCheckFunc);
+    vm_registerFunc(vm, "deref", 5, derefFunc);
+    vm_registerFunc(vm, "reset!", 6, resetFunc);
+    vm_registerFunc(vm, "swap!", 5, swapFunc);
 
-    ENV_SET_FUNC("cons", 4, consFunc);
-    ENV_SET_FUNC("concat", 6, concatFunc);
+    vm_registerFunc(vm, "cons", 4, consFunc);
+    vm_registerFunc(vm, "concat", 6, concatFunc);
 
-    ENV_SET_FUNC("nth", 3, nthFunc);
-    ENV_SET_FUNC("first", 5, firstFunc);
-    ENV_SET_FUNC("rest", 4, restFunc);
+    vm_registerFunc(vm, "nth", 3, nthFunc);
+    vm_registerFunc(vm, "first", 5, firstFunc);
+    vm_registerFunc(vm, "rest", 4, restFunc);
 
-    ENV_SET_FUNC("throw", 5, throwFunc);
+    vm_registerFunc(vm, "throw", 5, throwFunc);
 
-    ENV_SET_FUNC("apply", 5, applyFunc);
-    ENV_SET_FUNC("map", 3, mapFunc);
+    vm_registerFunc(vm, "apply", 5, applyFunc);
+    vm_registerFunc(vm, "map", 3, mapFunc);
 
-    ENV_SET_FUNC("nil?", 4, nilCheckFunc);
-    ENV_SET_FUNC("true?", 5, trueCheckFunc);
-    ENV_SET_FUNC("false?", 6, falseCheckFunc);
-    ENV_SET_FUNC("symbol?", 7, symbolCheckFunc);
-    ENV_SET_FUNC("symbol", 6, symbolFunc);
-    ENV_SET_FUNC("keyword", 7, keywordFunc);
-    ENV_SET_FUNC("keyword?", 8, keywordCheckFunc);
-    ENV_SET_FUNC("vector", 6, vectorFunc);
-    ENV_SET_FUNC("vector?", 7, vectorCheckFunc);
-    ENV_SET_FUNC("sequential?", 11, sequentialCheckFunc);
-    ENV_SET_FUNC("hash-map", 8, hashMapFunc);
-    ENV_SET_FUNC("map?", 4, mapCheckFunc);
+    vm_registerFunc(vm, "nil?", 4, nilCheckFunc);
+    vm_registerFunc(vm, "true?", 5, trueCheckFunc);
+    vm_registerFunc(vm, "false?", 6, falseCheckFunc);
+    vm_registerFunc(vm, "symbol?", 7, symbolCheckFunc);
+    vm_registerFunc(vm, "symbol", 6, symbolFunc);
+    vm_registerFunc(vm, "keyword", 7, keywordFunc);
+    vm_registerFunc(vm, "keyword?", 8, keywordCheckFunc);
+    vm_registerFunc(vm, "vector", 6, vectorFunc);
+    vm_registerFunc(vm, "vector?", 7, vectorCheckFunc);
+    vm_registerFunc(vm, "sequential?", 11, sequentialCheckFunc);
+    vm_registerFunc(vm, "hash-map", 8, hashMapFunc);
+    vm_registerFunc(vm, "map?", 4, mapCheckFunc);
 
-    ENV_SET_FUNC("assoc", 5, assocFunc);
-    ENV_SET_FUNC("dissoc", 6, dissocFunc);
-    ENV_SET_FUNC("get", 3, getFunc);
-    ENV_SET_FUNC("contains?", 9, containsCheckFunc);
-    ENV_SET_FUNC("keys", 4, keysFunc);
-    ENV_SET_FUNC("vals", 4, valsFunc);
+    vm_registerFunc(vm, "assoc", 5, assocFunc);
+    vm_registerFunc(vm, "dissoc", 6, dissocFunc);
+    vm_registerFunc(vm, "get", 3, getFunc);
+    vm_registerFunc(vm, "contains?", 9, containsCheckFunc);
+    vm_registerFunc(vm, "keys", 4, keysFunc);
+    vm_registerFunc(vm, "vals", 4, valsFunc);
 
-    ENV_SET_FUNC("readline", 8, readlineFunc);
-    ENV_SET_FUNC("time-ms", 7, timeMsFunc);
-    ENV_SET_FUNC("meta", 4, metaFunc);
-    ENV_SET_FUNC("with-meta", 9, withMetaFunc);
-    ENV_SET_FUNC("fn?", 3, fnCheckFunc);
-    ENV_SET_FUNC("macro?", 6, macroCheckFunc);
-    ENV_SET_FUNC("string?", 7, stringCheckFunc);
-    ENV_SET_FUNC("number?", 7, numberCheckFunc);
-    ENV_SET_FUNC("seq", 3, seqFunc);
-    ENV_SET_FUNC("conj", 4, conjFunc);
+    vm_registerFunc(vm, "readline", 8, readlineFunc);
+    vm_registerFunc(vm, "time-ms", 7, timeMsFunc);
+    vm_registerFunc(vm, "meta", 4, metaFunc);
+    vm_registerFunc(vm, "with-meta", 9, withMetaFunc);
+    vm_registerFunc(vm, "fn?", 3, fnCheckFunc);
+    vm_registerFunc(vm, "macro?", 6, macroCheckFunc);
+    vm_registerFunc(vm, "string?", 7, stringCheckFunc);
+    vm_registerFunc(vm, "number?", 7, numberCheckFunc);
+    vm_registerFunc(vm, "seq", 3, seqFunc);
+    vm_registerFunc(vm, "conj", 4, conjFunc);
 
-    ENV_SET_FUNC("gc", 2, gcFunc);
+    vm_registerFunc(vm, "gc", 2, gcFunc);
 }

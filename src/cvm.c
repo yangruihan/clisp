@@ -7,15 +7,6 @@
 #include "ccorelib.h"
 #include "cmem.h"
 
-#define ENV_SET_FUNC(chars, len, func) \
-    do \
-    { \
-        Value sv = value_symbol(vm, (chars), (len)); \
-        VM_PUSHV(sv); \
-        envobj_set(vm->env, sv, value_func(vm, &(func))); \
-        VM_POPV(sv); \
-    } while (false)
-
 #define EXPAND_TO(chars, len, secondValue) \
     Value symbol = value_symbol(vm, (chars), (len)); \
     VM_PUSHV(symbol); \
@@ -884,6 +875,14 @@ void vm_dofile(VM* vm, const char* filePath, int argc, char** argv)
     vm_rep(vm, cmd);
 
     CFREE_ARRAY(vm, char, cmd, cmdLen);
+}
+
+void vm_registerFunc(VM* vm, const char* funcName, const int nameLen, FuncPtr funcPtr)
+{
+    Value sv = value_symbol(vm, funcName, nameLen);
+    VM_PUSHV(sv);
+    envobj_set(vm->env, sv, value_func(vm, funcPtr));
+    VM_POPV(sv);
 }
 
 void vm_pushBlockCmObj(VM* vm, Obj* obj)
