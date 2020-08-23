@@ -136,13 +136,21 @@ static void scanner_skipIgnoredPart(Scanner* s)
 static Token scanner_string(Scanner* s)
 {
     char c = scanner_peek(s);
-    while ((c != '"' || (c == '"' && scanner_peekPrev(s) == '\\')) && !scanner_isAtEnd(s))
+    while (c != '"' && !scanner_isAtEnd(s))
     {
         if (c == '\n')
             s->line++;
 
         scanner_next(s);
-        c = scanner_peek(s);
+        char nc = scanner_peek(s);
+
+        if (c == '\\' && (nc == '\\' || nc == '"'))
+        {
+            scanner_next(s);
+            nc = scanner_peek(s);
+        }
+
+        c = nc;
     }
 
     if (scanner_isAtEnd(s))
