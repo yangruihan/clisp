@@ -92,6 +92,11 @@ typedef enum ErrorCode
     } while (false)
 #endif
 
+/* ----- Platform ----- */
+#if defined(WIN32) || defined(_WIN32)
+    #define C_WINDOWS 1
+#endif
+
 /* ----- Debug ----- */
 #if DEBUG_TRACE
 #define DTRACE(vm, fmt, ...) \

@@ -271,8 +271,12 @@ Value value_meta(Value value);
 
 #define value_str(vm, chars, len)         (value_obj(strobj_copy((vm), (chars), (len))))
 
+#ifdef C_WINDOWS
+#define value_list(vm, len, ...)          (value_obj(listobj_new((vm), (len), ##__VA_ARGS__))) 
+#else
 #define _value_list(vm, len, ...)         (value_obj(listobj_new((vm), (len), ##__VA_ARGS__))) 
 #define value_list(vm, len...)            (_value_list(vm, len))
+#endif
 #define value_listWithNil(vm, len)        (value_obj(listobj_newWithNil((vm), (len))))
 #define value_listWithArr(vm, len, arr)   (value_obj(listobj_newWithArr((vm), (len), (arr))))
 #define value_listWithEmpty(vm)           (value_obj(listobj_new((vm), 0)))
@@ -283,14 +287,22 @@ Value value_meta(Value value);
 #define value_keyword(vm, chars, len)     (value_obj(keywordobj_new((vm), (chars), (len))))
 #define value_keywordWithStr(vm, strObj)  (value_obj(keywordobj_newWithStr((vm), (strObj))))
 
+#ifdef C_WINDOWS
+#define value_vector(vm, len, ...)        (value_obj(vectorobj_new((vm), (len), ##__VA_ARGS__)))
+#else
 #define _value_vector(vm, len, ...)       (value_obj(vectorobj_new((vm), (len), ##__VA_ARGS__)))
 #define value_vector(vm, len...)          (_value_vector(vm, len))
+#endif
 #define value_vectorWithNil(vm, len)      (value_obj(vectorobj_newWithArr((vm), (len))))
 #define value_vectorWithArr(vm, len, arr) (value_obj(vectorobj_newWithArr((vm), (len), (arr))))
 #define value_vectorWithEmpty(vm)         (value_obj(vectorobj_new((vm), 0)))
 
+#ifdef C_WINDOWS
+#define value_map(vm, len, ...)           (value_obj(mapobj_new((vm), (len), ##__VA_ARGS__)))
+#else
 #define _value_map(vm, len, ...)          (value_obj(mapobj_new((vm), (len), ##__VA_ARGS__)))
 #define value_map(vm, len...)             (_value_map(vm, len))
+#endif
 #define value_mapWithArr(vm, len, arr)    (value_obj(mapobj_newWithArr((vm), (len), (arr))))
 #define value_mapWithEmpty(vm)            (value_obj(mapobj_new((vm), 0)))
 
