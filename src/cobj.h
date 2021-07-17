@@ -16,18 +16,6 @@ typedef struct sEscapeData
 
 extern EscapeData escapeCharDatas[ESCAPE_DATA_LEN];
 
-#define obj_asStr(o)       ((StrObj*)o)
-#define obj_asList(o)      ((ListObj*)o)
-#define obj_asSymbol(o)    ((SymbolObj*)o)
-#define obj_asKeyword(o)   ((KeywordObj*)o)
-#define obj_asVector(o)    ((VectorObj*)o)
-#define obj_asMap(o)       ((MapObj*)o)
-#define obj_asFunc(o)      ((FuncObj*)o)
-#define obj_asEnv(o)       ((EnvObj*)o)
-#define obj_asClosure(o)   ((ClosureObj*)o)
-#define obj_asAtom(o)      ((AtomObj*)o)
-#define obj_asException(o) ((ExceptionObj*)o)
-
 typedef enum
 {
     LLO_STRING    = 3,
