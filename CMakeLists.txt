@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-set(ROOT_PROJ_NAME CMal)
+set(ROOT_PROJ_NAME CLisp)
 
 project(${ROOT_PROJ_NAME})
 

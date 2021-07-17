@@ -1,4 +1,4 @@
-set(PROJ_NAME cmal)
+set(PROJ_NAME clisp)
 
 project(${PROJ_NAME})
 
