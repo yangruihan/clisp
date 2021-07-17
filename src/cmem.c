@@ -169,6 +169,7 @@ static void blackenObj(VM* vm, Obj* obj)
 
         markValue(vm, cobj->params);
         markValue(vm, cobj->body);
+        break;
     }
 
     default:
