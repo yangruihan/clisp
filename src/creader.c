@@ -47,10 +47,9 @@ static bool isIllegalSymbol(char c)
 {
     return c == ' '  || c == '\r' || c == '\t' ||
            c == '\n' || c == '['  || c == ']'  ||
-           c == ']'  || c == '{'  || c == '}'  ||
-           c == '('  || c == '\'' || c == '"'  ||
-           c == '`'  || c == ','  || c == ';'  ||
-           c == ')';
+           c == '{'  || c == '}'  || c == '('  ||
+           c == ')'  || c == '"'  || c == '`'  ||
+           c == ','  || c == ';'  || c == '\'';
 }
 
 static bool scanner_isAtEnd(Scanner* s)
@@ -416,7 +415,7 @@ static Value readMap(VM* vm, Reader* r)
         reportReaderError(r, reader_prev(r), EC_NoMatchRightCurlyBracket);
     }
 
-    // empty list
+    // empty map
     if (*reader_peek(r).start == '}')
     {
         // consume '}'
