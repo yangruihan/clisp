@@ -339,6 +339,12 @@ Value EVAL(VM* vm, Value value, EnvObj* env, ExceptionObj** exception)
                         {
                             DTRACE(vm, "EVAL let*");
 
+                            if (lobj->items.count != 3)
+                            {
+                                THROW("RuntimeError: let* must have binding list and body");
+                                RETURN_VALUE(value_none());
+                            }
+
                             EnvObj* newEnv = envobj_new(vm, env);
                             VM_PUSH(newEnv);
 

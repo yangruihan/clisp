@@ -520,9 +520,13 @@ static Value readAtom(VM* vm, Reader* r)
 
         return ret;
     }
-    else if (isDigit(*t->start)) // number
+    else if (isDigit(*t->start)) // positive number
     {
         return value_num(strtod(t->start, NULL));
+    }
+    else if (t->len >= 2 && *t->start == '-' && isDigit(*(t->start + 1))) // negative number
+    {
+        return value_num(-strtod(t->start + 1, NULL));
     }
 
     // symbol
