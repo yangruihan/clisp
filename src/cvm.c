@@ -262,6 +262,13 @@ Value EVAL(VM* vm, Value value, EnvObj* env, ExceptionObj** exception)
     s_EvalDepth++;
     // RLOG_ERROR("EEEE INIT------------------------------ %d", s_EvalDepth);
 
+    // call stack over flow
+    if (s_EvalDepth > STACK_MAX_DEPTH)
+    {
+        THROW("RuntimeError: call stack overflow > %d", STACK_MAX_DEPTH);
+        RETURN_VALUE(value_none());
+    }
+
     for(;;)
     {
         if (vm->currentEnv != env)

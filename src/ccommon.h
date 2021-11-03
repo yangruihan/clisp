@@ -8,8 +8,7 @@
 
 #include "rlib.h"
 
-#define LIST_MAX_ITEM_COUNT 256
-#define TO_STR_BUFF_COUNT 1024
+#include "cconfig.h"
 
 typedef struct sVM VM;
 typedef struct sValue Value;

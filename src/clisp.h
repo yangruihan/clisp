@@ -6,6 +6,7 @@ extern "C"
 {
 #endif
 
+#include "cconfig.h"
 #include "ccommon.h"
 #include "cvalue.h"
 #include "cobj.h"

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "cmal.h"
+#include "clisp.h"
 
 static void repl(VM* vm)
 {

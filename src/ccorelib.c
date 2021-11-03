@@ -293,13 +293,15 @@ DEF_FUNC(emptyCheckFunc)
         return VAL_TRUE;
 }
 
-DEF_FUNC(countCheckFunc)
+DEF_FUNC(countFunc)
 {
     ASSERT_ONE_PARAM("count");
 
     ValueArray* array = value_listLikeGetArr(FIRST_VAL);
     if (array)
         return value_num(array->count);
+    else if (value_isStr(FIRST_VAL))
+        return value_num(value_asStr(FIRST_VAL)->length);
     else
         return value_num(0);
 }
@@ -990,7 +992,7 @@ void initCoreLib(VM* vm)
     vm_registerFunc(vm, "list?", 5, listCheckFunc);
 
     vm_registerFunc(vm, "empty?", 6, emptyCheckFunc);
-    vm_registerFunc(vm, "count", 5, countCheckFunc);
+    vm_registerFunc(vm, "count", 5, countFunc);
 
     vm_registerFunc(vm, "read-string", 11, readStringFunc);
     vm_registerFunc(vm, "slurp", 5, slurpFunc);
