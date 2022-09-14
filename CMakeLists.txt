@@ -64,5 +64,5 @@ function(get_static_lib_path SUB_FOLDER LIB_NAME DEBUG_OUT RELEASE_OUT)
     endif()
 endfunction()
 
-add_subdirectory(libs/rlib/src)
+add_subdirectory(libs/rlib)
 add_subdirectory(src)

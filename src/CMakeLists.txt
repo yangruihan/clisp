@@ -14,7 +14,7 @@ else(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(EXECUTABLE_OUTPUT_PATH "${ROOT_SOURCE_DIR}/bin/${PROJ_NAME}/Release")
 endif(CMAKE_BUILD_TYPE MATCHES "Debug")
 
-include_directories(${ROOT_SOURCE_DIR}/libs/rlib/src)
+include_directories(${ROOT_SOURCE_DIR}/libs/rlib/include)
 
 add_executable(
     ${PROJ_NAME}
@@ -24,5 +24,5 @@ add_executable(
 
 target_link_libraries(
     ${PROJ_NAME}
-    RLib
+    rlib
 )
