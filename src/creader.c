@@ -200,7 +200,7 @@ static Token scanner_scanToken(Scanner* s)
 
         // other symbol, numbers, true, false, nil
         default:
-            while (!isIllegalSymbol(scanner_peek(s)) && !scanner_isAtEnd(s))
+            while (!scanner_isAtEnd(s) && !isIllegalSymbol(scanner_peek(s)))
                 scanner_next(s);
 
             return scanner_makeToken(s);
